@@ -11,12 +11,15 @@ class LexicalAnalizator:
 
     def search_char(self):
         int_chars = ""
+        if self.reader.viewNextChar() == '#':
+            print('error')
         while self.reader.viewNextChar().isnumeric():
             int_chars += self.reader.read()
-        self.type = LexemType.CHAR.name
-        self.token = chr(int(int_chars))
+        self.token += chr(int(int_chars))
 
     def getNextLexeme(self):
+        self.token = ""
+        self.type = ""
         self.reader.clear_temp_buffer()
         char = self.reader.read()
         if not char:
@@ -37,9 +40,12 @@ class LexicalAnalizator:
                     ''.join(self.reader.get_temp_buffer())]
         if char == '#':
             self.search_char()
+            while self.reader.viewNextChar() == '#':
+                self.reader.read()
+                self.search_char()
             return [str(self.reader.column),
                     str(self.reader.row),
-                    self.type,
+                    LexemType.STRING.name if len(self.token) > 1 else LexemType.CHAR.name,
                     self.token,
                     ''.join(self.reader.get_temp_buffer())]
         return char
