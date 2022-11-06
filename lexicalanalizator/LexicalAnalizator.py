@@ -22,19 +22,45 @@ class LexicalAnalizator:
         self.type = ""
         self.reader.clear_temp_buffer()
         char = self.reader.read()
+        row = self.reader.row
+        column = self.reader.column
         if not char:
             self.type = LexemType.EOF.name
             self.token = LexemToken.EOF.name
-            return [str(self.reader.column),
-                    str(self.reader.row),
+            return [str(column),
+                    str(row),
                     self.type,
                     self.token,
                     ''.join(self.reader.get_temp_buffer())]
         if char == ';':
             self.type = LexemType.OPERATOR.name
             self.token = LexemToken.SEMICOLOM.name
-            return [str(self.reader.column),
-                    str(self.reader.row),
+            return [str(column),
+                    str(row),
+                    self.type,
+                    self.token,
+                    ''.join(self.reader.get_temp_buffer())]
+        if char == '=':
+            self.type = LexemType.OPERATOR.name
+            self.token = LexemToken.EQUAL.name
+            return [str(column),
+                    str(row),
+                    self.type,
+                    self.token,
+                    ''.join(self.reader.get_temp_buffer())]
+        if char == '[':
+            self.type = LexemType.SEPARATOR.name
+            self.token = LexemToken.LBRACE.name
+            return [str(column),
+                    str(row),
+                    self.type,
+                    self.token,
+                    ''.join(self.reader.get_temp_buffer())]
+        if char == ']':
+            self.type = LexemType.SEPARATOR.name
+            self.token = LexemToken.RBRACE.name
+            return [str(column),
+                    str(row),
                     self.type,
                     self.token,
                     ''.join(self.reader.get_temp_buffer())]
@@ -43,8 +69,8 @@ class LexicalAnalizator:
             while self.reader.viewNextChar() == '#':
                 self.reader.read()
                 self.search_char()
-            return [str(self.reader.column),
-                    str(self.reader.row),
+            return [str(column),
+                    str(row),
                     LexemType.STRING.name if len(self.token) > 1 else LexemType.CHAR.name,
                     self.token,
                     ''.join(self.reader.get_temp_buffer())]

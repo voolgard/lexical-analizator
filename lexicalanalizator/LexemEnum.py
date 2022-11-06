@@ -2,10 +2,10 @@ from enum import Enum
 
 LexemType = Enum(
     'Type',
-    ['EOF', 'OPERATOR', 'STRING', 'CHAR', 'ERROR']
+    ['EOF', 'OPERATOR', 'SEPARATOR', 'STRING', 'CHAR', 'ERROR']
 )
 
 LexemToken = Enum(
     'Token',
-    ['EOF', 'SEMICOLOM']
+    ['EOF', 'EQUAL', 'LBRACE', 'RBRACE', 'SEMICOLOM']
 )

@@ -1,7 +1,7 @@
 import sys
 from lexicalanalizator.LexicalAnalizator import getLexemes
 
-line = "#65#66"
+line = "[[[]]]\n[][]"
 print(getLexemes(line.encode('utf-8')))
 # if len(sys.argv) > 1:
 #     print(getLexemes(sys.argv[1].encode('utf-8')))

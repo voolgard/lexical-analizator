@@ -10,8 +10,13 @@ class Reader:
 
     def read(self):
         char = self._sio.read(1).decode('utf-8')
-        self._temp_buffer.append(char)
         self.row += 1
+        self._temp_buffer.append(char)
+        if char == "\n":
+            self.column += 1
+            self.row = 0
+            self.clear_temp_buffer()
+            char = self.read()
         return char
 
     def get_temp_buffer(self):
