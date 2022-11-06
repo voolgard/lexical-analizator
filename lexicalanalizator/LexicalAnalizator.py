@@ -1,6 +1,7 @@
 from lexicalanalizator.Reader import Reader
 from lexicalanalizator.LexemEnum import LexemType
 from lexicalanalizator.LexemEnum import LexemToken
+from lexicalanalizator.Exception import LexicalException
 
 
 class LexicalAnalizator:
@@ -12,7 +13,7 @@ class LexicalAnalizator:
     def search_char(self):
         int_chars = ""
         if self.reader.viewNextChar() == '#':
-            print('error')
+            raise LexicalException(f"Error in line -> {self.reader.column} symbol -> {self.reader.row}")
         while self.reader.viewNextChar().isnumeric():
             int_chars += self.reader.read()
         self.token += chr(int(int_chars))
